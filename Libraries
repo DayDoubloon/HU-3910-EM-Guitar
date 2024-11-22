@@ -1,0 +1,6 @@
+PWM.h Library
+https://github.com/matzefriedrich/arduino-pwm-frequency-library
+
+PCA9685 I2C ServoDriver for PWM control
+Library: https://github.com/adafruit/Adafruit-PWM-Servo-Driver-Library?tab=readme-ov-file
+Board Example: https://www.adafruit.com/product/815
