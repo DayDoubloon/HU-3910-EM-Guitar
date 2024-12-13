@@ -8,14 +8,14 @@ Arrays for variables about each string
 */
 
 // real frequencies for each string and fret combination
-float freqReal[7][6] = { // freqReal[string][fret]
-  {    0,     1,     2,     3,     4,     5}, // fret numbers, not actual data
-  {330.0, 352.7, 371.1, 393.1, 415.7, 440.3}, // 1st string, E4
-  {247.0, 265.5, 279.4, 296.1, 313.2, 331.3}, // 2nd string, B3
-  {196.0, 212.4, 222.5, 235.4, 249.1, 263.4}, // 3rd string, G3
-  {147.0, 158.1, 166.9, 176.1, 186.4, 197.7}, // 4th string, D3
-  {110.0, 118.3, 125.2, 132.7, 140.5, 148.5}, // 5th string, A2
-  { 82.5,  89.9,  95.9, 100.0, 106.7, 111.9}, // 6th string, E2
+float freqReal[7][13] = { // freqReal[string][fret]
+  {    0,     1,     2,     3,     4,     5,     6,     7,     8,     9,    10,    11,    12}, // fret numbers, not actual data
+  {330.0, 352.7, 373.3, 393.1, 415.7, 440.3, 466.6, 493.9, 523.3, 554.4, 589.3, 622.3, 662.3}, // 1st string, E4
+  {247.0, 265.3, 279.3, 295.8, 312.9, 331.3, 351.2, 370.0, 392.1, 415.3, 440.0, 466.6, 496.2}, // 2nd string, B3
+  {196.0, 212.1, 222.4, 235.6, 249.1, 263.4, 277.2, 293.7, 311.1, 329.6, 349.2, 370.0, 392.0}, // 3rd string, G3
+  {147.0, 158.3, 166.9, 176.5, 186.8, 197.4, 209.3, 221.5, 235.3, 248.8, 264.1, 279.2, 295.0}, // 4th string, D3
+  {110.0, 118.5, 124.9, 132.0, 140.2, 147.7, 156.1, 165.5, 175.3, 185.7, 196.4, 208.0, 220.6}, // 5th string, A2
+  { 82.5,  89.1,  94.0, 100.2, 106.0, 112.0, 117.6, 123.8, 131.4, 139.5, 147.6, 156.4, 166.0}, // 6th string, E2
 
 }; 
 
@@ -35,7 +35,7 @@ Adafruit_MPR121 strings = Adafruit_MPR121();
 Adafruit_MPR121 frets = Adafruit_MPR121();
 
 // highest fret available
-int maxFret = 5;
+int maxFret = 12;
 
 // what frets are pressed, in the order of high to low, 0 means no input
 int fretsPlaying[6] = {0, 0, 0, 0, 0, 0};
@@ -71,7 +71,7 @@ void powerChordInputGroups() { // determines pairs of fret and string inputs
   // set the fret to the highest played on all the other strings
   for (int i = 1; i < 6; i++) {
     if (fretsPlaying[i] == 0) {
-      fretsPlaying[i] = fretsPlaying[i -1];
+      fretsPlaying[i] = fretsPlaying[i - 1];
     }
   }
 
@@ -144,6 +144,34 @@ void simpleFretInput() {
   if (fretInput & (1 << 5)) {
     highestFret = 5;
   }
+
+  if (fretInput & (1 << 6)) {
+    highestFret = 6;
+  }
+
+  if (fretInput & (1 << 7)) {
+    highestFret = 7;
+  }
+
+  if (fretInput & (1 << 8)) {
+    highestFret = 8;
+  }
+
+  if (fretInput & (1 << 9)) {
+    highestFret = 9;
+  }
+
+  if (fretInput & (1 << 10)) {
+    highestFret = 10;
+  }
+
+  if (fretInput & (1 << 11)) {
+    highestFret = 11;
+  }
+
+  if (fretInput & (1 << 12)) {
+    highestFret = 12;
+  }
 }
 
 
@@ -209,7 +237,7 @@ void setup() {
 
   // set address and sensitivities of the touch sensors for the frets
   frets.begin(0x5D);
-  frets.setThreshholds(20, 6);
+  frets.setThreshholds(6, 6);
 
   // set the strings to be outputting
   pinMode(stringPin[1], OUTPUT);
